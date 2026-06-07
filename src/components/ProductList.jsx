@@ -1,41 +1,58 @@
 import getProducts from "../api/productApi";
 import { useState, useEffect } from "react";
 
-function ProductList() {
-  const [products, setProducts] = useState([]);
+function ProductList(){
+  const [products, setProducts]= useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    useEffect(()=>{
+    const fetchData =async ()=>{
+try{
+  const data = await getProducts();
+  setProducts(data);
+}
+catch(error){
+  console.error("Failed to fetch the data", error)
+}
+finally{
+  setLoading(false)
+}
+    }
+    
+    fetchData()}
+  ,[])
 
-    fetchProducts();
-  }, []);
+  
+  return(
 
-  if (loading) {
-    return <div className="text-center">Loading...</div>;
-  }
+   
+    
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">{
+          loading? (
+            <div className="flex items-center">Products loading...</div>):(
+          
+        products.map(product =>(
+          <div key={product.id}>
+            <h3>{product.title}</h3>
+            <img src={product.image}></img>
+            <p>{product.description}</p>
+            <p>{product.price}</p>
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {products.map(product => (
-        <div className="bg-white p-4 shadow-md" key={product.id}>
-          <img src={product.image} alt={product.name} className="w-full h-64 object-cover mb-4  " />
-          <h3 className="text-lg font-bold">{product.name}</h3>
-          <p className="text-gray-600">{product.description}</p>
-          <p>${product.price.toFixed(2)}</p>
-        </div>
-      ))}
-    </div>
-  );
+
+          </div>
+          
+        ))
+      )
+      
 }
 
-export default ProductList;
+    </div>
+
+  )
+
+
+
+
+
+}
+export  default ProductList;
