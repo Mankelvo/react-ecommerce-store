@@ -1,10 +1,10 @@
 import getProducts from "../api/productApi";
 import { useState, useEffect } from "react";
+import ProductCard from "./ProductCard";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [expandedProductId, setExpandedProductId] = useState(null)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,37 +33,22 @@ function ProductList() {
           <p className="mt-2 text-gray-600">
             Browse our latest collection of quality products.
           </p>
+          </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 bg-gray-50">
       {
-      loading? (<div className="text-center">Loading...</div>):
-      (products.map(product => (
-        <div className="bg-white p-4 shadow-md" key={product.id}>
-          <img src={product.image} alt={product.name} className="w-full h-64 object-cover mb-4  " />
-          <h3 className="text-lg font-bold">{product.name}</h3>
-          <p className="text-gray-600">
-            {expandedProductId === product.id
-            ? product.description
-           
-            : `${product.description.slice(0,80)}...`
-           
-            
-        }
-        </p>
-        <button
-        onClick={() =>
-          setExpandedProductId(
-            expandedProductId === product.id? null : product.id 
-          )
-        }
-        className="mt-2 text-sm font-medium text-blue-600 hover:text-blue-800"
-        >
-        {expandedProductId === product.id ? "Show less": "Read more"}
-        </button>
-          <p>${product.price.toFixed(2)}</p>
-        </div>)
-      ))}
+      loading? (
+      <div className="text-center text-lg font-medium text-gray-600">Loading...</div>
+
+      ):(
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+       {
+        products.map((product) =>(
+          <ProductCard key={product.id} product={product} />
+        ))}
     </div>
+      )}
     </div>
+    
     </div>
     </section>
   );
