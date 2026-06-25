@@ -40,7 +40,7 @@ function ProductList() {
       <div className="text-center text-lg font-medium text-gray-600">Loading...</div>
 
       ):(
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 bg-gray-100">
        {
         products.map((product) =>(
           <ProductCard key={product.id} product={product} />
