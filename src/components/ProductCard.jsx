@@ -22,7 +22,7 @@ function ProductCard({product}){
                 {isExpanded
                 ? product.description 
         : isLongDescription
-        ? `$product.description.slice(0,80)...`
+        ? `${product.description.slice(0,80)}...`
     :product.description}
 {isLongDescription && (<button
     onClick={()=>setisExpanded(!isExpanded)}
