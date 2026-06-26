@@ -2,56 +2,42 @@ import getProducts from "../api/productApi";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 
-function ProductList() {
-  const [products, setProducts] = useState([]);
+function ProductList(){
+  const [products, setProducts]= useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    useEffect(()=>{
+    const fetchData =async ()=>{
+try{
+  const data = await getProducts();
+  setProducts(data);
+}
+catch(error){
+  console.error("Failed to fetch the data", error)
+}
+finally{
+  setLoading(false)
+}
+    }
+    
+    fetchData()}
+  ,[])
 
-    fetchProducts();
-  }, []);
-
-  
+  if (loading) {
+    return <div className="text-center">Loading...</div>;
+  }
 
   return (
-    <section className="min-h-screen bg-gray-50 px-4 py-10">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">
-            Featured Products
-          </h2>
-          <p className="mt-2 text-gray-600">
-            Browse our latest collection of quality products.
-          </p>
-          </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 bg-gray-50">
-      {
-      loading? (
-      <div className="text-center text-lg font-medium text-gray-600">Loading...</div>
-
-      ):(
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-       {
-        products.map((product) =>(
-          <ProductCard key={product.id} product={product} />
-        ))}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {products.map(product => (
+        <div className="bg-white p-4 shadow-md" key={product.id}>
+          <img src={product.image} alt={product.name} className="w-full h-64 object-cover mb-4  " />
+          <h3 className="text-lg font-bold">{product.name}</h3>
+          <p className="text-gray-600">{product.description}</p>
+          <p>${product.price.toFixed(2)}</p>
+        </div>
+      ))}
     </div>
-      )}
-    </div>
-    
-    </div>
-    </section>
   );
 }
-
-export default ProductList;
+export  default ProductList;
