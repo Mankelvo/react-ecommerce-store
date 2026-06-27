@@ -4,9 +4,26 @@ import Shop from "./pages/Shop"
 import Cart from "./pages/Cart"
 import SignIn from "./pages/SignIn"
 import ProductList from "./components/ProductList"
+import { useState } from "react"
 
 
 function App() {
+const [cart,setCart]= useState([]);
+const addToCart =(product) =>{
+  setCart((prevCart) =>{
+const existingProduct = prevCart.find((item) => item.id === product.id)
+if(existingProduct){
+  return prevCart.map((item) =>
+  item.id === product.id
+?{...item, quantity: item.quantity + 1}
+: item
+);
+}
+return [...prevCart, {...product, quantity: 1}]
+  });
+};
+
+
 
   return (
     <div>
@@ -16,24 +33,20 @@ function App() {
              <Link to="/shop">Shop</Link>
               <Link to="/ProductList">Product Details</Link>
               <Link to="signin">Sign In</Link>
-                <Link to="/cart">Cart</Link>
+                <Link to="/cart">Cart<p>{cart.length}</p></Link>
           </nav>
 
           <Routes>
             <Route path="/" element ={<Home/>}/>
             <Route path="/shop" element ={<Shop/>}/>
             <Route path="/signin" element ={<SignIn/>}/>
-            <Route path="/cart" element ={<Cart/>}/>
-            <Route path="/productList" element ={<ProductList/>}/>
+            <Route path="/cart" element ={<Cart cart={cart}/>}/>
+            <Route path="/productList" element ={<ProductList addToCart={addToCart}/>}/>
 
           </Routes>
-
     </BrowserRouter>
 
-    <main>
-      <h1 className="text-4xl font-bold mb-8">Welcome to Our Store</h1>
-      <ProductList/>
-    </main>
+    
 
     </div>
   

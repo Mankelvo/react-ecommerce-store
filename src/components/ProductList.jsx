@@ -2,7 +2,7 @@ import getProducts from "../api/productApi";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 
-function ProductList() {
+function ProductList({addToCart}) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -45,7 +45,7 @@ function ProductList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 bg-gray-100">
        {
         products.map((product) =>(
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} addToCart={addToCart} />
         ))}
     </div>
       )}
