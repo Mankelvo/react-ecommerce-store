@@ -1,8 +1,21 @@
+import CartItem from "./CartItem";
 
 
 
-function Cart({cart}) {
-  const total = cart.reduce((sum,item)=>sum + item.price *item.quantity,0);
+function Cart({cart = []}) {
+
+  const subtotal = cart.reduce((sum , item)=>{
+    const price = Number(item.price.toFixed(2) ?? 0);
+    const quantity = Number(item.quantity ?? 1);
+    return sum + price * quantity
+  },0);
+
+  const shipping = subtotal > 0?  5.99 : 0;
+const tax = subtotal * 0.088;
+const total = subtotal + shipping + tax;
+
+
+
 return (
     <section className="min-h-screen bg-gray-50 px-4 py-10">
  <div className=" max-w-7xl mx-auto">
@@ -13,39 +26,62 @@ return (
   {
 cart.length === 0 ?
 (
-  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 gap-5">
-    <h3 className="text-xl font-semibold text-slate-900">Your cart is empty</h3>
+  <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-10 text-center gap-5">
+   <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center"><span className="text-4xl">🛒</span></div>
+   <h3 className="text-xl font-semibold text-slate-900">Your cart is empty</h3>
     <p className="text-slate-500 mt-2">Add some products to your cart first</p>
   </div>
   
 ) :
 (
-  <>
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-<div className="lg:col-span-2 space-y-4">
-  {cart.map((item) =>(
+ 
+<div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
+<div className="min-w-0 space-y-5">
+  {cart.map((item, index) =>(
    
-      <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow  duration-300"
-      key={item.id}
-      >
-        <div className="w-full sm:w-32 h-32 bg-slate-100 rounded-xl flex items-center justify-center">
-      <img className=" w-full h-full object-contain p-4 bg-gray-50"
-            src={item.image}
-            alt={item.title}
-            />
-
-            </div>
-      <h3 className="text-md font-semibold text-gray-900 mt-4">{item.title}</h3>
-      <p className=" mt-4 text-md font-bold text-gray-900">Price: ${item.price.toFixed(2)}</p>
-      <p className=" mt-2 text-sm font-bold text-gray-900 mb-2"> Quantity: {item.quantity}</p>
-</div>  
+     <CartItem key={item.id ?? index} item={item}/>
   ))}
   </div>
+
+  <aside className="h-fit rounded-3xl border border-slate-200 bg-white p-6 shadow-sm lg:sticky lg:top-8">
+    <h3 className="text-xl font-bold text-slate-900">
+Order Summary
+    </h3>
+    <div className="mt-6 space-y-4">
+      <div className="flex items-center justify-between text-slate-600">
+        <span>Subtotal</span>
+        <span className="font-semibold text-slate-900">${subtotal.toFixed(2)}</span>
+      </div>
+
+      <div className=" flex items-center justify-between text-slate-600">
+        <span>
+          Shipping
+        </span>
+<span className="font-semibold text-slate-900"> 
+  ${shipping.toFixed(2)}
+</span>
+      </div>
+
+      <div className="flex items-center justify-between text-slate-600"> 
+        <span>Tax</span>
+        <span>${tax.toFixed(2)}</span>
+
+      </div>
+
+      <div className="border-t border-slate-200 pt-4">
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-bold text-slate-900">Total</span>
+          <span>${total.toFixed(2)}</span>
+        </div>
+
+      </div>
+    </div>
+    <button type="button" className="mt-6 w-full rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800 active:scale-[0.98]">
+      Proceed to Checkout ➡
+    </button>
+  </aside>
   </div>
-  <div className="mt-10 text-2xl font-bold text-gray-900">
-    Total:${total.toFixed(2)}
-  </div>
-</>
+  
 )
 
   }
