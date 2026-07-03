@@ -4,11 +4,29 @@ import Shop from "./pages/Shop"
 import Cart from "./pages/Cart"
 import SignIn from "./pages/SignIn"
 import ProductList from "./components/ProductList"
-import { useState } from "react"
-
+import { useEffect,useState } from "react"
+const CART_STORAGE_KEY = "shopping-cart"
 
 function App() {
-const [cart,setCart]= useState([]);
+const [cart,setCart]= useState(()=>{
+  try {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+    return savedCart ? JSON.parse(savedCart) : [];
+  }
+  catch (error){
+    console.error("Failed to loat cart from localStorage:", error);
+    return [];
+  }
+});
+
+useEffect(()=>{
+  try{
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  }
+  catch (error){
+    console.error("Failed to save cart to localStorage:", error);
+  }
+}, [cart])
 const addToCart =(product) =>{
   setCart((prevCart) =>{
 const existingProduct = prevCart.find((item) => item.id === product.id)
