@@ -2,7 +2,14 @@ import CartItem from "./CartItem";
 
 
 
-function Cart({cart = []}) {
+function Cart({
+  cart = []
+  ,
+  onIncrease,
+  onDecrease,
+  onRemove,
+  onClearCart,
+}) {
 
   const subtotal = cart.reduce((sum , item)=>{
     const price = Number(item.price.toFixed(2) ?? 0);
@@ -39,7 +46,11 @@ cart.length === 0 ?
 <div className="min-w-0 space-y-5">
   {cart.map((item, index) =>(
    
-     <CartItem key={item.id ?? index} item={item}/>
+     <CartItem key={item.id ?? index} item={item}
+     onIncrease={onIncrease}
+     onDecrease={onDecrease}
+     onRemove= {onRemove}
+     />
   ))}
   </div>
 
@@ -79,6 +90,12 @@ Order Summary
     <button type="button" className="mt-6 w-full rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800 active:scale-[0.98]">
       Proceed to Checkout ➡
     </button>
+    <button
+    type="button"
+    onClick={onClearCart}
+    className="mt-3 w-full rounded-2xl bg-red-50 px-5 py-3 font-semibold text-red-600 transition hover:bg-red-100 active:scale-[0.98]"
+    >
+      Clear Cart</button>
   </aside>
   </div>
   
