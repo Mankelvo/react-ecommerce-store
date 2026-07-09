@@ -26,7 +26,37 @@ useEffect(()=>{
   catch (error){
     console.error("Failed to save cart to localStorage:", error);
   }
-}, [cart])
+}, [cart]);
+
+function increaseQuantity(id){
+setCart((currentCart) =>
+currentCart.map((item)=>
+item.id === id
+? {...item, quantity: Number(item.quantity ?? 1) + 1} : item
+)
+);
+}
+
+function decreaseQuantity(id){
+  setCart((currentCart) =>
+  currentCart.map((item) =>
+    item.id === id 
+  ? {...item, quantity: Number(item.quantity ?? 1)-1}
+  : item
+  )
+  .filter((item) => item.quantity > 0)
+  );
+}
+
+function removeFromCart(id){
+setCart((currentCart) => currentCart.filter((item) => item.id !==id));
+}
+
+function clearCart(){
+  setCart([]);
+  localStorage.removeItem(CART_STORAGE_KEY)
+}
+
 const addToCart =(product) =>{
   setCart((prevCart) =>{
 const existingProduct = prevCart.find((item) => item.id === product.id)
@@ -44,7 +74,9 @@ return [...prevCart, {...product, quantity: 1}]
 
 
   return (
+    
     <div>
+
     <BrowserRouter>
           <nav className="flex flex-col md:flex-row justify-around py-8 px-6">
             <Link to="/">Home</Link>
@@ -58,7 +90,14 @@ return [...prevCart, {...product, quantity: 1}]
             <Route path="/" element ={<Home/>}/>
             <Route path="/shop" element ={<Shop/>}/>
             <Route path="/signin" element ={<SignIn/>}/>
-            <Route path="/cart" element ={<Cart cart={cart}/>}/>
+            <Route path="/cart" element ={<Cart 
+            cart={cart}
+            onIncrease = {increaseQuantity}
+            onDecrease = {decreaseQuantity}
+            onRemove = {removeFromCart}
+            onClearCart = {clearCart}
+            
+            />}/>
             <Route path="/productList" element ={<ProductList addToCart={addToCart}/>}/>
 
           </Routes>
@@ -70,6 +109,7 @@ return [...prevCart, {...product, quantity: 1}]
   
       
   )
+
 }
 
 export default App
