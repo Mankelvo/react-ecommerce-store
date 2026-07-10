@@ -1,4 +1,4 @@
-import { BrowserRouter,Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter,Routes, Route, NavLink } from "react-router-dom"
 import Home from "./pages/Home"
 import Shop from "./pages/Shop"
 import Cart from "./pages/Cart"
@@ -86,14 +86,24 @@ const navLinkClass = ({isActive}) =>
     <div>
 
     <BrowserRouter>
-          <nav className="flex flex-col md:flex-row justify-around py-8 px-6">
-            <Link to="/" className={navLinkClass}>Home</Link>
-             <Link to="/shop" className={navLinkClass}>Shop</Link>
-              <Link to="/ProductList" className={navLinkClass}>Product Details</Link>
-              <Link to="signin" className={navLinkClass}>Sign In</Link>
-                <Link to="/cart" className={navLinkClass}>Cart<p>{cart.length}</p></Link>
-          </nav>
+    <header className="sticky top-0 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+          <nav className="mx-auto flex max-w-7xl flex-col gap-4  md:flex-row md:items-center justify-between py-4 px-6">
+            <NavLink
+            to="/"
+            className="text-2xl font-black tracking-tight text-slate-900"
+            >
+              Cartify <span className="text-blue-600">.</span>
+            </NavLink>
 
+            <div className="flex flex-wrap items-center gap-2">
+            <NavLink to="/" className={navLinkClass}>Home</NavLink>
+             <NavLink to="/shop" className={navLinkClass}>Shop</NavLink>
+              <NavLink to="/ProductList" className={navLinkClass}>Product Details</NavLink>
+              <NavLink to="signin" className={navLinkClass}>Sign In</NavLink>
+                <NavLink to="/cart" className={navLinkClass}>Cart<p>{cart.length}</p></NavLink>
+         </div>
+          </nav>
+</header>
           <Routes>
             <Route path="/" element ={<Home/>}/>
             <Route path="/shop" element ={<Shop/>}/>
