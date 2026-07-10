@@ -72,6 +72,14 @@ return [...prevCart, {...product, quantity: 1}]
 };
 
 
+const navLinkClass = ({isActive}) =>
+  `rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+    isActive 
+    ? "bg-blue-600 text-white shadow-md"
+    :
+    "bg-slate-900 text-white hover:bg-slate-800"
+  }`;
+
 
   return (
     
@@ -79,11 +87,11 @@ return [...prevCart, {...product, quantity: 1}]
 
     <BrowserRouter>
           <nav className="flex flex-col md:flex-row justify-around py-8 px-6">
-            <Link to="/">Home</Link>
-             <Link to="/shop">Shop</Link>
-              <Link to="/ProductList">Product Details</Link>
-              <Link to="signin">Sign In</Link>
-                <Link to="/cart">Cart<p>{cart.length}</p></Link>
+            <Link to="/" className={navLinkClass}>Home</Link>
+             <Link to="/shop" className={navLinkClass}>Shop</Link>
+              <Link to="/ProductList" className={navLinkClass}>Product Details</Link>
+              <Link to="signin" className={navLinkClass}>Sign In</Link>
+                <Link to="/cart" className={navLinkClass}>Cart<p>{cart.length}</p></Link>
           </nav>
 
           <Routes>
