@@ -1,4 +1,4 @@
-function CartItem({item}){
+function CartItem({item, onIncrease, onDecrease, onRemove}){
 const price = Number(item.price ?? 0);
 const quantity = Number(item.quantity ?? 1);
 const totalPrice = price * quantity;
@@ -22,10 +22,27 @@ alt={item.title ?? "Cart Item"}
 </div>
 
 <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-betweeny">
-    <div className="inline-flex w-fit items-center rounded-full bg-slate-100 px-4 py-2">
-        <span className="text-sm text-slate-500">Qty:</span>
-        <span className="ml-2 font-bold text-slate-900">{quantity}</span>
+    
+    <div className="flex item-center gap-3">
+<button 
+type="button"
+onClick={()=>onDecrease(item.id)}
+className="flex h-9 w-9 items-center justify-center rounded-full border-slate-300 text-lg font-bold text-slate-700 transition hover:bg-slate-100 "
+>
+    -
+</button>    
+<span className="min-w-8 text-center font-bold text-slate-900">{quantity}</span>  
+  <button 
+  type="button"
+  onClick= {()=>onIncrease(item.id)}
+  className="flex h-9 w-9 items-center justify-center rounded-full border-slate-300 text-lg font-bold text-slate-700 transition hover:bg-slate-100 "
+
+  >
+    +
+
+  </button>
     </div>
+   
 
     <div className="text-left sm:text-right">
         <p className="text-sm text-slate-500">Item Total</p>
