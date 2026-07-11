@@ -1,3 +1,4 @@
+
 function CartItem({item, onIncrease, onDecrease}){
 const price = Number(item.price ?? 0);
 const quantity = Number(item.quantity ?? 1);
