@@ -3,6 +3,7 @@ import Home from "./pages/Home"
 import Shop from "./pages/Shop"
 import Cart from "./pages/Cart"
 import SignIn from "./pages/SignIn"
+import Navbar from "./components/Navbar"
 import ProductList from "./components/ProductList"
 import { useEffect,useState } from "react"
 const CART_STORAGE_KEY = "shopping-cart"
@@ -86,6 +87,7 @@ const navLinkClass = ({isActive}) =>
     <div>
 
     <BrowserRouter>
+
     <header className="sticky top-0 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
           <nav className="mx-auto flex max-w-7xl flex-col gap-4  md:flex-row md:items-center justify-between py-4 px-6">
             <NavLink
