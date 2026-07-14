@@ -82,21 +82,8 @@ return (
                 Sign In
 
             </NavLink>
-
             <div ref={cartRef} className="relative">
-            <button
-            type="button"
-            onClick={() =>setIsCartOpen((current)=>!current)}
-            className="relative flex flex-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition hover:-translate-y-0.5 hover:bg-800 active:scale-95"
-            >
-                <span>Cart</span>
-                <ShoppingCart className="h-4 w-4"/>
-                {cartCount > 0 && (
-                    <span className="bsolute -right-2 -top-2 flex h-6 min-w-6 items-center justify-center rounded-full bg-red-500 px-2 text-xs font-bold text-white ring-2 ring-white" >
-                        {cartCount > 99 ? "99+" :cartCount}
-                    </span>
-                )}
-            </button>
+                
             </div>
 
             <NavLink
@@ -113,7 +100,7 @@ return (
              <span>Cart</span>
                 <ShoppingCart className= "h-4 w-4 "/>
             {cartCount >0 && (
-                <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 px-2 text-sm font-bold text-white ring-2 ring-white">
+                <span className="absolute -right-2 -top-2 flex h-7 w-7 p-2 items-center justify-center rounded-full bg-red-500 px-2 text-sm font-bold text-white ring-2 ring-white">
                     {cartCount > 99 ? "99+": cartCount}
                 </span>
             )}

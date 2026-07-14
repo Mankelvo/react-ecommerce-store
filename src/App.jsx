@@ -87,8 +87,9 @@ const navLinkClass = ({isActive}) =>
     <div>
 
     <BrowserRouter>
+        <Navbar cart={cart} onRemove={removeFromCart}/>
 
-    <header className="sticky top-0 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+   {/* <header className="sticky top-0 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
           <nav className="mx-auto flex max-w-7xl flex-col gap-4  md:flex-row md:items-center justify-between py-4 px-6">
             <NavLink
             to="/"
@@ -106,6 +107,8 @@ const navLinkClass = ({isActive}) =>
          </div>
           </nav>
 </header>
+*/}
+
           <Routes>
             <Route path="/" element ={<Home/>}/>
             <Route path="/shop" element ={<Shop/>}/>
