@@ -135,13 +135,94 @@ return (
                                 Start Shopping
                             </Link>
                         </div>
+                    ) : (
+                        <>
+                        <div className="max-h-80 space-y-3 overflow-y-auto px-5 py-4">
+                            {
+                                cart.map((item, index) =>{
+                                    const price= Number(item.price ?? 0);
+                                    const quantity = Number(item.quantity ?? 1);
+                                    const itemTotal = price * quantity;
+
+                                    return (
+                                        <div
+                                        key ={item.id || `${item.title}-${index}`}
+                                        className="flex gap-4 rounded-2xl bg-slate-50 p-3"
+                                        >
+                                    
+                                            <div
+                
+                                            className="flex h-20 w-20 shrink-0 items justify-center rounded-xl bg-white p-2"
+                                            >
+                                                <img
+                                            src={item.image}
+                                            alt = {item.title || "Cart item"}
+                                            className="h-full w-full object-contain"
+                                            />
+                                            </div>
+
+                                            <div className="min-w-0 flex-1">
+                                                <h4 className="truncate text-sm font-bold text-slate-950">{item.center}</h4>
+                                                <p>Qty: {quantity}</p>
+
+                                                <div className="mt-2 flex items-center justify-between gap-3">
+                                                    <p>${itemTotal.toFixed(2)}</p>
+                                                    <button 
+                                                    type="button"
+                                                    onClick={()=>onRemove(item.id)}
+                                                    className="flex items-center gap-1 rounded-full bg-white px-3 py-1 text-xs font-bold text-red-500 transition hover:bg-red-50"
+                                                
+                                                    >
+                                                        <Trash2 className="h-3.5 w-3.5"/>
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    );
+
+                                                            })
+                            }
+
+                        </div>
+
+                        <div className="border-t border-slate-100 px-5 py-4">
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-sm font-semibold text-slate-500"
+                                >Subtotal</span>
+                                <span className="text-xl font-black text-slate-950">${subtotal.toFixed(2)}</span>
+                            </div>
+                            <Link
+                            to="/cart"
+                            className="block rounded-full blue-600 px-4 py-3 text-center text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 active:scale-95"
+                            >
+                                View Cart
+                            </Link>
+
+                        </div>
+                        </>
                     )}
                     </div>
+
+                    
                 )}
                 
                                 </div>
+<button
+type="button"
+onClick={() =>setIsMenuOpen((current)=>!current)}
+className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:bg-slate-100 md:hidden"
+aria-label="Toggle mobile menu"
+>
+    {isMenuOpen ? (
+        <X className="h-5 w-5"/>
+    ) : (
+        <Menu className="h-5 w-5"/>
+    )}
 
-            <NavLink
+</button>
+            {/*<NavLink
             to="/cart"
             className={({isActive}) =>
             `relative flex items-center gap-2 rounded-full px-5 py-2.5  text-sm font-semibold shadow-sm transition
@@ -161,10 +242,73 @@ return (
             )}
 
             </NavLink>
-            
+            */}
 
         </div>
         </nav>
+
+        { isMenuOpen && (
+            <div className="border-t border-slate-200 bg-white px-4 pb-4 pt-2 md:hidden">
+                <div className="mx-auto max-w-7xl space-y-2">
+                    <NavLink
+                    to="/"
+                    end
+                    onClick={()=> setIsMenuOpen(false)}
+                    className={mobileNavLinkClass}
+                
+                    >
+                        Home
+
+                    </NavLink>
+                    <NavLink
+                    to="/shop"
+                    onClick={()=>setIsMenuOpen(false)}
+                    className={mobileNavLinkClass}
+                    >
+                        Shop
+                    </NavLink>
+
+                    <NavLink
+                    to="/productList"
+                    onClick={()=>isMenuOpen(false)}
+                    className={mobileNavLinkClass}
+                    >
+
+                        Products
+                    </NavLink>
+                    <NavLink
+                    to="/signin"
+                    onClick={()=>isMenuOpen(false)}
+                    className={mobileNavLinkClass}
+                    >
+                        Sign In 
+                    </NavLink>
+
+                    <NavLink
+                    to="/cart"
+                    onClick={()=>isMenuOpen(false)}
+                    className={({isActive}) =>
+                    `flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                        isActive 
+                        ?
+                        "bg-slate-950 text-white"
+                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+                    }`
+                    }
+                    >
+                        <span>Cart</span>
+                        {cartCount > 0 && (
+                            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-red-500 px-2 text-xs font-bold text-white">
+                                {cartCount > 90 ? "90+" : cartCount}
+                            </span>
+                        )}
+
+                    </NavLink>
+
+                </div>
+
+            </div>
+        )}
     </header>
 );
 
