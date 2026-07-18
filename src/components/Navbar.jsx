@@ -63,7 +63,7 @@ return (
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
-        <NavLink to="/" className={{navLinkClass}}>Home</NavLink>
+        <NavLink to="/" end className={navLinkClass}>Home</NavLink>
         <NavLink to="/shop" className={navLinkClass}>Shop</NavLink>
         <NavLink to="/productList" className={navLinkClass}>Products</NavLink>
         </div>
@@ -83,8 +83,63 @@ return (
 
             </NavLink>
             <div ref={cartRef} className="relative">
+                <button
+                typeof="button"
+                onClick={() => setIsCartOpen((current) => !current)}
+                className="relative flex items-center gap-2 rounded=full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 active:scale-95"
+                >
+                    <span>Cart</span>
+                    <ShoppingCart className="h-4 w-4"/>
+                    {
+                        cartCount > 0 && (
+                            <span className="absolute -right-2 -top-2 flex h-6 min-w-6 items-center justify-center rounded-full bg-red-500 px-2 text-xs font-bold text-white ring-2 ring-white">
+                                {cartCount > 99 ? "99+" :cartCount}
+                            </span>
+                        )
+                    }
+                </button>
+
+                {isCartOpen && (
+                <div className=" absolute right-0 mt-4 w-[min(92wv, 390px)] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/20">
+                    <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+                        <div>
+                            <h3 className="text-base font-black text-slate-950">Shopping Cart</h3>
+                            <p className="text-sm text-slate-500">
+                                {cartCount}{cartCount === 1 ? "item": "items"}
+                            </p>
+                        </div>
+                        <button
+                        type="button"
+                        onClick={() =>setIsCartOpen(false)}
+                        className="flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100  hover:text-slate-950"
+                        aria-label="Close cart preview"
+                        >
+                            <X className="h-4 w-4"/>
+
+                        </button>
+                    </div>
+                    {cart.length === 0 ?(
+                        <div className="px-5 py-10 text-center">
+                            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+                                <ShoppingCart className="h-7 text-slate-500"/>
+                            </div>
+                            <h4 className="mt-4 text-lg font-bold text-slate-950">
+                                Your cart is empty
+                            </h4>
+                            <p className="mt-1 text-sm text-slate-500">Add products to see them here</p>
+                            
+                            <Link
+                            to="/productList"
+                            className="mt-6 inline-flex rounded-full bg-slate-950 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-slate-800 "
+                            >
+                                Start Shopping
+                            </Link>
+                        </div>
+                    )}
+                    </div>
+                )}
                 
-            </div>
+                                </div>
 
             <NavLink
             to="/cart"
