@@ -89,26 +89,6 @@ const navLinkClass = ({isActive}) =>
     <BrowserRouter>
         <Navbar cart={cart} onRemove={removeFromCart}/>
 
-   {/* <header className="sticky top-0 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
-          <nav className="mx-auto flex max-w-7xl flex-col gap-4  md:flex-row md:items-center justify-between py-4 px-6">
-            <NavLink
-            to="/"
-            className="text-2xl font-black tracking-tight text-slate-900"
-            >
-              Cartify <span className="text-blue-600">.</span>
-            </NavLink>
-
-            <div className="flex flex-wrap items-center gap-2">
-            <NavLink to="/" className={navLinkClass}>Home</NavLink>
-             <NavLink to="/shop" className={navLinkClass}>Shop</NavLink>
-              <NavLink to="/ProductList" className={navLinkClass}>Product Details</NavLink>
-              <NavLink to="signin" className={navLinkClass}>Sign In</NavLink>
-                <NavLink to="/cart" className={navLinkClass}>Cart<p>{cart.length}</p></NavLink>
-         </div>
-          </nav>
-</header>
-*/}
-
           <Routes>
             <Route path="/" element ={<Home/>}/>
             <Route path="/shop" element ={<Shop/>}/>
