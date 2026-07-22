@@ -70,11 +70,11 @@ function Navbar({ cart = [], onRemove = () => {} }) {
           </NavLink>
 
           <NavLink to="/shop" className={navLinkClass}>
-            Shop
+            Search
           </NavLink>
 
           <NavLink to="/productList" className={navLinkClass}>
-            Products
+            Shop
           </NavLink>
         </div>
 
@@ -259,7 +259,7 @@ function Navbar({ cart = [], onRemove = () => {} }) {
               onClick={() => setIsMenuOpen(false)}
               className={mobileNavLinkClass}
             >
-              Shop
+              Search
             </NavLink>
 
             <NavLink
@@ -267,7 +267,7 @@ function Navbar({ cart = [], onRemove = () => {} }) {
               onClick={() => setIsMenuOpen(false)}
               className={mobileNavLinkClass}
             >
-              Products
+              Shop
             </NavLink>
 
             <NavLink
