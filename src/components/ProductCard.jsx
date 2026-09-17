@@ -1,48 +1,67 @@
 
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ShoppingCart, Star } from "lucide-react";
 
-function ProductCard({product, addToCart}){
+function ProductCard({ product, addToCart }) {
+  return (
+    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
 
-    const[isExpanded, setisExpanded] = useState(false);
-    const isLongDescription = product.description.length > 80;
+      <Link
+        to={`/product/${product.id}`}
+        className="flex h-64 items-center justify-center bg-slate-50 p-8"
+      >
+        <img
+          src={product.image}
+          alt={product.title}
+          className="h-full w-full object-contain transition duration-300 group-hover:scale-105"
+        />
+      </Link>
 
-    return (
+      <div className="flex flex-1 flex-col p-5">
 
-<div className=" max-w-7xl mx-auto grid-cols-1">
-    
-        <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow  duration-300">
-            <img className=" w-full h-56 object-contain p-4 bg-gray-50"
-            src={product.image}
-            alt={product.title}
-            />
-            <div className="p-4">
-            <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
+        <p className="text-xs font-bold uppercase tracking-wider text-blue-600">
+          {product.category}
+        </p>
 
-            <p className="mt-2 text-sm text-gray-600 leading-6">
-                {isExpanded
-                ? product.description 
-        : isLongDescription
-        ? `${product.description.slice(0,80)}...`
-    :product.description}
-{isLongDescription && (<button
-    onClick={()=>setisExpanded(!isExpanded)}
-    className="mt-2 text-sm font-medium text-blue-600 hover:text-blue-800"
-    >
-        {isExpanded
-        ? "Show less" :
-        "Read more"}
-        
-    </button>)}
-    
-            </p>
-            <p className=" mt-4 text-lg font-bold text-gray-900">${product.price.toFixed(2)}</p>
-            <button onClick={()=>addToCart(product)} >+Add
-            </button>
-</div>
+        <Link to={`/product/${product.id}`}>
+          <h3 className="mt-2 line-clamp-2 font-bold text-slate-900 hover:text-blue-600">
+            {product.title}
+          </h3>
+        </Link>
+
+        <div className="mt-3 flex items-center gap-1 text-sm text-slate-500">
+          <Star
+            size={16}
+            className="fill-yellow-400 text-yellow-400"
+          />
+
+          <span>
+            {product.rating?.rate ?? "N/A"}
+          </span>
+
+          <span>
+            ({product.rating?.count ?? 0})
+          </span>
         </div>
-    
-</div>
-    )
+
+        <div className="mt-auto flex items-center justify-between pt-6">
+
+          <p className="text-xl font-black text-slate-950">
+            ${Number(product.price).toFixed(2)}
+          </p>
+
+          <button
+            onClick={() => addToCart(product)}
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950 text-white transition hover:bg-blue-600"
+            aria-label="Add product to cart"
+          >
+            <ShoppingCart size={18} />
+          </button>
+
+        </div>
+      </div>
+    </article>
+  );
 }
 
 export default ProductCard;

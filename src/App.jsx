@@ -83,14 +83,14 @@ return [...prevCart, {...product, quantity: 1}]
 };
 
 
-const navLinkClass = ({isActive}) =>
+/*** const navLinkClass = ({isActive}) =>
   `rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
     isActive 
     ? "bg-blue-600 text-white shadow-md"
     :
     "bg-slate-900 text-white hover:bg-slate-800"
   }`;
-
+***/
 
   return (
   <BrowserRouter>
