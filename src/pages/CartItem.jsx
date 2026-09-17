@@ -1,5 +1,5 @@
 
-function CartItem({item, onIncrease, onDecrease}){
+function CartItem({item, onIncrease, onDecrease, onRemove}){
 const price = Number(item.price ?? 0);
 const quantity = Number(item.quantity ?? 1);
 const totalPrice = price * quantity;
@@ -42,6 +42,14 @@ className="flex h-9 w-9 items-center justify-center rounded-full border-slate-30
     +
 
   </button>
+
+  <button
+  type="button"
+  onClick={() => onRemove(item.id)}
+  className="text-sm font-bold text-red-500 hover:text-red-700"
+>
+  Remove
+</button>
     </div>
    
 
