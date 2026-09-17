@@ -1,6 +1,6 @@
 import CartItem from "./CartItem";
 
-
+import { Link } from "react-router-dom";
 
 function Cart({
   cart = []
@@ -87,9 +87,14 @@ Order Summary
 
       </div>
     </div>
-    <button type="button" className="mt-6 w-full rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:bg-slate-800 active:scale-[0.98]">
-      Proceed to Checkout ➡
-    </button>
+
+    <Link
+  to="/checkout"
+  className="mt-6 block w-full rounded-2xl bg-slate-900 px-5 py-3 text-center font-semibold text-white transition hover:bg-slate-800"
+>
+  Proceed to Checkout →
+</Link>
+
     <button
     type="button"
     onClick={onClearCart}
