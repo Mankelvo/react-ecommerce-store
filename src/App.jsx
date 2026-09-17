@@ -1,11 +1,21 @@
-import { BrowserRouter,Routes, Route, NavLink } from "react-router-dom"
-import Home from "./pages/Home"
-import Shop from "./pages/Shop"
-import Cart from "./pages/Cart"
-import SignIn from "./pages/SignIn"
-import Navbar from "./components/Navbar"
-import ProductList from "./components/ProductList"
-import { useEffect,useState } from "react"
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import { useEffect, useState } from "react";
+
+import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
+import SignIn from "./pages/SignIn";
+import ProductDetails from "./pages/ProductDetails";
+import Checkout from "./pages/Checkout";
+import About from "./pages/About";
+
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 const CART_STORAGE_KEY = "shopping-cart"
 
 function App() {
@@ -83,35 +93,77 @@ const navLinkClass = ({isActive}) =>
 
 
   return (
-    
-    <div>
+  <BrowserRouter>
 
-    <BrowserRouter>
-        <Navbar cart={cart} onRemove={removeFromCart}/>
+    <Navbar
+      cart={cart}
+      onRemove={removeFromCart}
+    />
 
-          <Routes>
-            <Route path="/" element ={<Home/>}/>
-            <Route path="/shop" element ={<Shop/>}/>
-            <Route path="/signin" element ={<SignIn/>}/>
-            <Route path="/cart" element ={<Cart 
+    <Routes>
+
+      <Route
+        path="/"
+        element={
+          <Home addToCart={addToCart} />
+        }
+      />
+
+      <Route
+        path="/shop"
+        element={
+          <Shop addToCart={addToCart} />
+        }
+      />
+
+      <Route
+        path="/product/:id"
+        element={
+          <ProductDetails
+            addToCart={addToCart}
+          />
+        }
+      />
+
+      <Route
+        path="/cart"
+        element={
+          <Cart
             cart={cart}
-            onIncrease = {increaseQuantity}
-            onDecrease = {decreaseQuantity}
-            onRemove = {removeFromCart}
-            onClearCart = {clearCart}
-            
-            />}/>
-            <Route path="/productList" element ={<ProductList addToCart={addToCart}/>}/>
+            onIncrease={increaseQuantity}
+            onDecrease={decreaseQuantity}
+            onRemove={removeFromCart}
+            onClearCart={clearCart}
+          />
+        }
+      />
 
-          </Routes>
-    </BrowserRouter>
+      <Route
+        path="/checkout"
+        element={
+          <Checkout
+            cart={cart}
+            onClearCart={clearCart}
+          />
+        }
+      />
 
-    
+      <Route
+        path="/signin"
+        element={<SignIn />}
+      />
 
-    </div>
-  
-      
-  )
+      <Route
+        path="/about"
+        element={<About />}
+      />
+
+    </Routes>
+
+    <Footer />
+
+  </BrowserRouter>
+);
 
 }
 
