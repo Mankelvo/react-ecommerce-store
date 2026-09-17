@@ -56,11 +56,11 @@ function Navbar({ cart = [], onRemove = () => {} }) {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-lg font-black text-white shadow-lg shadow-slate-900/20">
-            C
+            M
           </div>
 
           <span className="text-lg font-black tracking-tight text-slate-950">
-            Cartify<span className="text-blue-600">.</span>
+            Mankelvo<span className="text-blue-600">.</span>
           </span>
         </Link>
 
