@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 function Checkout({ cart, onClearCart }) {
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+const [submitError, setSubmitError] = useState("");
 
   const subtotal = cart.reduce(
     (total, item) =>
@@ -12,13 +14,57 @@ function Checkout({ cart, onClearCart }) {
     0
   );
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(event) {
+  event.preventDefault();
+
+  if (cart.length === 0) return;
+
+  const formData = new FormData(event.currentTarget);
+
+  const firstName = String(formData.get("firstName") || "").trim();
+  const lastName = String(formData.get("lastName") || "").trim();
+  const email = String(formData.get("email") || "").trim();
+
+  const orderData = {
+    customerName: `${firstName} ${lastName}`,
+    email,
+    total: Number(subtotal.toFixed(2))
+  };
+
+  setIsSubmitting(true);
+  setSubmitError("");
+
+  try {
+    const response = await fetch("/api/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(orderData)
+    });
+
+    if (!response.ok) {
+      throw new Error("Order submission failed");
+    }
+
+    const result = await response.json();
+
+    console.log("Order saved to Azure SQL:", result);
 
     setOrderPlaced(true);
     onClearCart();
-  }
 
+  } catch (error) {
+    console.error("Checkout error:", error);
+
+    setSubmitError(
+      "Unable to save your order. Please try again."
+    );
+
+  } finally {
+    setIsSubmitting(false);
+  }
+}
 
   if (orderPlaced) {
     return (
@@ -75,19 +121,25 @@ function Checkout({ cart, onClearCart }) {
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
 
             <Input
-              label="First Name"
-              type="text"
-            />
+  label="First Name"
+  name="firstName"
+  type="text"
+  required
+/>
 
-            <Input
-              label="Last Name"
-              type="text"
-            />
+<Input
+  label="Last Name"
+  name="lastName"
+  type="text"
+  required
+/>
 
-            <Input
-              label="Email"
-              type="email"
-            />
+<Input
+  label="Email"
+  name="email"
+  type="email"
+  required
+/>
 
             <Input
               label="Phone"
@@ -128,12 +180,18 @@ function Checkout({ cart, onClearCart }) {
 
 
           <button
-            type="submit"
-            disabled={cart.length === 0}
-            className="mt-8 w-full rounded-full bg-blue-600 px-6 py-4 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
-          >
-            Place Demo Order
-          </button>
+  type="submit"
+  disabled={cart.length === 0 || isSubmitting}
+  className="mt-8 w-full rounded-full bg-blue-600 px-6 py-4 font-bold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+>
+  {isSubmitting ? "Saving Order..." : "Place Demo Order"}
+</button>
+
+{submitError && (
+  <p role="alert" className="mt-3 text-sm text-red-600">
+    {submitError}
+  </p>
+)}
 
         </form>
 
@@ -188,22 +246,27 @@ function Checkout({ cart, onClearCart }) {
 }
 
 
-function Input({ label, type }) {
+function Input({ label, name, type, required = false }) {
   return (
     <label className="block">
-
       <span className="mb-2 block text-sm font-bold text-slate-700">
         {label}
+        {!required && (
+          <span className="ml-2 font-normal text-slate-400">
+            (Optional)
+          </span>
+        )}
       </span>
 
       <input
+        name={name}
         type={type}
-        required
+        required={required}
         className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-blue-500"
       />
-
     </label>
   );
 }
+
 
 export default Checkout;
