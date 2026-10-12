@@ -60,7 +60,7 @@ function Navbar({ cart = [], onRemove = () => {} }) {
           </div>
 
           <span className="text-lg font-black tracking-tight text-slate-950">
-            Mankelvo<span className="text-blue-600">.</span>
+            Mankelvo Market<span className="text-blue-600"></span>
           </span>
         </Link>
 
