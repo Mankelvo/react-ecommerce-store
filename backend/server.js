@@ -63,6 +63,20 @@ app.post("/api/orders", async (req, res) => {
   }
 });
 
+app.use((err, req, res, next) => {
+  if (err.type === "entity.parse.failed") {
+    return res.status(400).json({
+      error: "Invalid JSON request body"
+    });
+  }
+
+  console.error("API error:", err.message);
+
+  res.status(500).json({
+    error: "Internal server error"
+  });
+});
+
 app.listen(PORT, "127.0.0.1", () => {
   console.log(`Mankelvo API running on port ${PORT}`);
 });
